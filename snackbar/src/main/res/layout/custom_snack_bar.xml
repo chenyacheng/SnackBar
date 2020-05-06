@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/snack_bar_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/custom_snack_bar_radius"
+    android:drawablePadding="15dp"
+    android:gravity="center"
+    android:maxEms="14"
+    android:paddingStart="45dp"
+    android:paddingLeft="45dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="45dp"
+    android:paddingRight="45dp"
+    android:paddingBottom="20dp"
+    android:textColor="#ffffffff"
+    android:textSize="14sp" />
