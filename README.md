@@ -13,5 +13,5 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-	        implementation 'com.github.yacheng199306:SnackBar:1.0'
+	        implementation 'com.github.chenyacheng:SnackBar:1.1'
 	}
