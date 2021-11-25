@@ -42,6 +42,11 @@ public final class SnackBarBuilder {
         builder(activity.getWindow().getDecorView().findViewById(android.R.id.content).getRootView(), R.layout.snack_bar, 0, text, SnackBar.LENGTH_SHORT);
     }
 
+    public void builder(View view, int layout, int resId, CharSequence text, int duration) {
+        snackBar.make(view, layout, resId, text, duration);
+        snackBar.show();
+    }
+
     public void builderLong(Activity activity, CharSequence text) {
         builder(activity.getWindow().getDecorView().findViewById(android.R.id.content).getRootView(), R.layout.snack_bar, 0, text, SnackBar.LENGTH_LONG);
     }
@@ -78,11 +83,6 @@ public final class SnackBarBuilder {
         }
     }
 
-    public void builder(View view, int layout, int resId, CharSequence text, int duration) {
-        snackBar.make(view, layout, resId, text, duration);
-        snackBar.show();
-    }
-
     public void builder(Activity activity, int layout, int resId, CharSequence text, int duration) {
         builder(activity.getWindow().getDecorView().findViewById(android.R.id.content).getRootView(), layout, resId, text, duration);
     }
@@ -100,9 +100,7 @@ public final class SnackBarBuilder {
     }
 
     public void hideView() {
-        if (null != snackBar) {
-            snackBar.hideView();
-        }
+        snackBar.hideView();
     }
 
     /**

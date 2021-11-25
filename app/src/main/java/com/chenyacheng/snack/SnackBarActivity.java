@@ -1,6 +1,7 @@
 package com.chenyacheng.snack;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -59,6 +60,12 @@ public class SnackBarActivity extends AppCompatActivity {
                         SnackBarBuilder.getInstance().builder(dialog, R.layout.snack_bar, 0, "短--dialog", SnackBar.LENGTH_SHORT);
                     }
                 });
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        SnackBarBuilder.getInstance().hideView();
+                    }
+                });
                 dialog.show();
             }
         });
@@ -81,6 +88,12 @@ public class SnackBarActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         SnackBarBuilder.getInstance().builder(popupWindow, R.layout.snack_bar, 0, "长--popupWindow", SnackBar.LENGTH_LONG);
+                    }
+                });
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        SnackBarBuilder.getInstance().hideView();
                     }
                 });
             }

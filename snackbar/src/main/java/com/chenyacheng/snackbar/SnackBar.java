@@ -78,6 +78,7 @@ public final class SnackBar {
     private View viewLayout;
 
     void make(View view, int layout, int resId, CharSequence text, int duration) {
+        hideView();
         ViewGroup parent = findSuitableParent(view);
         if (parent == null) {
             throw new IllegalArgumentException("No suitable parent found from the given view. Please provide a valid view.");
@@ -89,6 +90,18 @@ public final class SnackBar {
             setText(text, resId);
             setDuration(duration);
         }
+    }
+
+    void hideView() {
+        SnackBarManager.getInstance().onDismissed(this.managerCallback);
+        if (null != this.viewLayout) {
+            final ViewParent parent = this.viewLayout.getParent();
+            if (parent instanceof ViewGroup) {
+                ((ViewGroup) parent).removeView(this.viewLayout);
+            }
+        }
+        targetParent = null;
+        viewLayout = null;
     }
 
     private ViewGroup findSuitableParent(View view) {
@@ -133,13 +146,5 @@ public final class SnackBar {
             targetParent.addView(viewLayout);
         }
         SnackBarManager.getInstance().onShown(managerCallback);
-    }
-
-    void hideView() {
-        SnackBarManager.getInstance().onDismissed(this.managerCallback);
-        final ViewParent parent = this.viewLayout.getParent();
-        if (parent instanceof ViewGroup) {
-            ((ViewGroup) parent).removeView(this.viewLayout);
-        }
     }
 }
