@@ -83,10 +83,8 @@ public final class SnackBar {
         if (parent == null) {
             throw new IllegalArgumentException("No suitable parent found from the given view. Please provide a valid view.");
         } else {
-            if (!SnackBarManager.getInstance().flag) {
-                targetParent = parent;
-                viewLayout = LayoutInflater.from(parent.getContext()).inflate(layout, targetParent, false);
-            }
+            targetParent = parent;
+            viewLayout = LayoutInflater.from(parent.getContext()).inflate(layout, targetParent, false);
             setText(text, resId);
             setDuration(duration);
         }
@@ -142,9 +140,11 @@ public final class SnackBar {
     }
 
     private void showView() {
-        if (viewLayout.getParent() == null) {
-            targetParent.addView(viewLayout);
+        if (null != viewLayout) {
+            if (viewLayout.getParent() == null) {
+                targetParent.addView(viewLayout);
+            }
+            SnackBarManager.getInstance().onShown(managerCallback);
         }
-        SnackBarManager.getInstance().onShown(managerCallback);
     }
 }

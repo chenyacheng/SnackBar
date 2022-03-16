@@ -88,7 +88,7 @@ final class SnackBarManager {
                 durationMs = LONG_DURATION_MS;
             }
             mHandler.removeCallbacksAndMessages(r);
-            mHandler.sendMessageDelayed(Message.obtain(mHandler, MSG_TIMEOUT, r), (long) durationMs);
+            mHandler.sendMessageDelayed(Message.obtain(mHandler, MSG_TIMEOUT, r), durationMs);
         }
     }
 

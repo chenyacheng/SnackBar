@@ -28,20 +28,25 @@ import android.content.IntentFilter;
  */
 public final class SnackBarHelper {
 
+    private static final String SNACK_BAR = "snackBar";
     private static String className;
+
+    private SnackBarHelper() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void startActivity(Activity activity, Intent intent) {
         SnackBarReceiver snackBarReceiver = new SnackBarReceiver(activity);
         className = activity.getClass().getSimpleName();
         // 实例化过滤器并设置要过滤的广播
-        IntentFilter intentFilter = new IntentFilter("snackBar");
+        IntentFilter intentFilter = new IntentFilter(SNACK_BAR);
         activity.registerReceiver(snackBarReceiver, intentFilter);
         activity.startActivity(intent);
     }
 
     public static void finish(Activity activity, String string) {
         Intent intent = new Intent();
-        intent.setAction("snackBar");
+        intent.setAction(SNACK_BAR);
         intent.putExtra(className, string);
         // 发送一个广播
         activity.sendBroadcast(intent);
@@ -52,14 +57,14 @@ public final class SnackBarHelper {
         SnackBarReceiver snackBarReceiver = new SnackBarReceiver(activity);
         className = activity.getClass().getSimpleName();
         // 实例化过滤器并设置要过滤的广播
-        IntentFilter intentFilter = new IntentFilter("snackBar");
+        IntentFilter intentFilter = new IntentFilter(SNACK_BAR);
         activity.registerReceiver(snackBarReceiver, intentFilter);
         activity.startActivityForResult(intent, requestCode);
     }
 
     public static void setResult(Activity activity, int resultCode, String string) {
         Intent intent = new Intent();
-        intent.setAction("snackBar");
+        intent.setAction(SNACK_BAR);
         intent.putExtra(className, string);
         // 发送一个广播
         activity.sendBroadcast(intent);
