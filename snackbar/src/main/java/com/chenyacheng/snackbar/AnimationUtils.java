@@ -7,24 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * @author BD
+ * 动画工具类
+ *
+ * @author chenyacheng
  * @date 2022/7/29 11:07
  */
 public class AnimationUtils {
-
-    private final AnimatorSet drawerSet = new AnimatorSet();
 
     public static AnimationUtils getInstance() {
         return SingletonEnum.INSTANCE.getInstance();
     }
 
     public void showAnimation(View view) {
+        AnimatorSet drawerSet = new AnimatorSet();
         drawerSet.play(ObjectAnimator.ofFloat(view, "alpha", 0, 1));
         drawerSet.setDuration(500);
         drawerSet.start();
     }
 
     public void hideAnimation(final ViewGroup viewGroup, final View view) {
+        AnimatorSet drawerSet = new AnimatorSet();
         drawerSet.play(ObjectAnimator.ofFloat(view, "alpha", 1, 0));
         drawerSet.setDuration(500);
         drawerSet.addListener(new Animator.AnimatorListener() {

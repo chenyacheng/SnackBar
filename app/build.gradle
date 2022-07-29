@@ -20,4 +20,5 @@ android {
 
 dependencies {
     implementation project(':snackbar')
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.7"
 }
