@@ -95,7 +95,7 @@ public final class SnackBar {
         if (null != this.viewLayout) {
             final ViewParent parent = this.viewLayout.getParent();
             if (parent instanceof ViewGroup) {
-                ((ViewGroup) parent).removeView(this.viewLayout);
+                AnimationUtils.getInstance().hideAnimation((ViewGroup) parent, this.viewLayout);
             }
         }
         targetParent = null;
@@ -144,6 +144,7 @@ public final class SnackBar {
             if (viewLayout.getParent() == null) {
                 targetParent.addView(viewLayout);
             }
+            AnimationUtils.getInstance().showAnimation(viewLayout);
             SnackBarManager.getInstance().onShown(managerCallback);
         }
     }
