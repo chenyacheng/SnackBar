@@ -99,8 +99,8 @@ public final class SnackBarBuilder {
         }
     }
 
-    public void hideView() {
-        snackBar.hideView();
+    public void hideView(boolean now) {
+        snackBar.hideView(now);
     }
 
     /**

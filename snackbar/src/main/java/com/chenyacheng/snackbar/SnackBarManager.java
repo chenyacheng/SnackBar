@@ -20,8 +20,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import androidx.annotation.NonNull;
-
 import java.lang.ref.WeakReference;
 
 final class SnackBarManager {
@@ -36,7 +34,7 @@ final class SnackBarManager {
     private SnackBarRecord nextSnackBar;
     private final Handler mHandler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
         @Override
-        public boolean handleMessage(@NonNull Message msg) {
+        public boolean handleMessage(Message msg) {
             if (msg.what == MSG_TIMEOUT) {
                 handleTimeout((SnackBarRecord) msg.obj);
                 return true;

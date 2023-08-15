@@ -27,9 +27,6 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
-
 /**
  * SnackBar类
  *
@@ -47,13 +44,13 @@ public final class SnackBar {
     static {
         HANDLER = new Handler(Looper.getMainLooper(), new Handler.Callback() {
             @Override
-            public boolean handleMessage(@NonNull Message msg) {
+            public boolean handleMessage(Message msg) {
                 switch (msg.what) {
                     case MSG_SHOW:
                         ((SnackBar) msg.obj).showView();
                         return true;
                     case MSG_DISMISS:
-                        ((SnackBar) msg.obj).hideView();
+                        ((SnackBar) msg.obj).hideView(false);
                         return true;
                     default:
                         return false;
@@ -78,7 +75,7 @@ public final class SnackBar {
     private View viewLayout;
 
     void make(View view, int layout, int resId, CharSequence text, int duration) {
-        hideView();
+        hideView(false);
         ViewGroup parent = findSuitableParent(view);
         if (parent == null) {
             throw new IllegalArgumentException("No suitable parent found from the given view. Please provide a valid view.");
@@ -90,12 +87,16 @@ public final class SnackBar {
         }
     }
 
-    void hideView() {
+    void hideView(boolean now) {
         SnackBarManager.getInstance().onDismissed(this.managerCallback);
         if (null != this.viewLayout) {
             final ViewParent parent = this.viewLayout.getParent();
             if (parent instanceof ViewGroup) {
-                AnimationUtils.getInstance().hideAnimation((ViewGroup) parent, this.viewLayout);
+                if (now) {
+                    ((ViewGroup) parent).removeView(this.viewLayout);
+                } else {
+                    AnimationUtils.getInstance().hideAnimation((ViewGroup) parent, this.viewLayout);
+                }
             }
         }
         targetParent = null;
@@ -122,7 +123,7 @@ public final class SnackBar {
     private void setText(CharSequence message, int resId) {
         final TextView tv = viewLayout.findViewById(R.id.snack_bar_text);
         if (resId != 0) {
-            Drawable drawableIcon = ResourcesCompat.getDrawable(viewLayout.getResources(), resId, null);
+            Drawable drawableIcon = viewLayout.getResources().getDrawable(resId, null);
             if (null != drawableIcon) {
                 drawableIcon.setBounds(0, 0, drawableIcon.getMinimumWidth(), drawableIcon.getMinimumHeight());
                 tv.setCompoundDrawables(null, drawableIcon, null, null);

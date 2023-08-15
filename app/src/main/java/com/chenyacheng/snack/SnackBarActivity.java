@@ -26,6 +26,11 @@ import com.chenyacheng.snackbar.SnackBarHelper;
  */
 public class SnackBarActivity extends AppCompatActivity {
 
+    /**
+     * 第一次按下返回键的时间
+     */
+    private long lastBackPressedTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +68,7 @@ public class SnackBarActivity extends AppCompatActivity {
                 dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialogInterface) {
-                        SnackBarBuilder.getInstance().hideView();
+                        SnackBarBuilder.getInstance().hideView(false);
                     }
                 });
                 dialog.show();
@@ -93,7 +98,7 @@ public class SnackBarActivity extends AppCompatActivity {
                 popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
-                        SnackBarBuilder.getInstance().hideView();
+                        SnackBarBuilder.getInstance().hideView(false);
                     }
                 });
             }
@@ -135,6 +140,22 @@ public class SnackBarActivity extends AppCompatActivity {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 按下返回键的时间间隔
+        final int backPressedInterval = 2000;
+        // 与上次点击返回键时刻作差
+        if ((System.currentTimeMillis() - lastBackPressedTime) > backPressedInterval) {
+            // 大于2000ms则认为是误操作，使用Toast进行提示
+            SnackBarBuilder.getInstance().builderShort(this, "再按一次退出程序");
+            // 并记录下本次点击“返回键”的时刻，以便下次进行判断
+            lastBackPressedTime = System.currentTimeMillis();
+        } else {
+            SnackBarBuilder.getInstance().hideView(true);
+            super.onBackPressed();
         }
     }
 }
